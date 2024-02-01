@@ -1,22 +1,34 @@
-SERVER = server
-CLIENT = client
-
-PRINTF = ft_printf
+NAME = server client
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -I$(PRINTF)/headers -L$(PRINTF) -lftprintf
+CFLAGS = -Wall -Wextra -Werror
+RM = rm -rf
+LIBFT = libft/libft.a
+LIBFT_DIR = libft/
 
-all:
-	@make -s -C $(PRINTF)
-	@gcc $(CFLAGS) server.c -o $(SERVER)
-	@gcc $(CFLAGS) client.c -o $(CLIENT)
-	@echo "server and client are ready!"
+SERVER = server
+SERVER_SRCS = server.c
+SERVER_OBJ = $(SERVER_SRCS:.c=.o)
+
+CLIENT = client
+CLIENT_SRC = client.c
+CLIENT_OBJ = $(CLIENT_SRC:.c=.o)
+
+all: $(NAME)
+	$(NAME): $(LIBFT) $(SERVER_OBJ) $(CLIENT_OBJ)
+		$(CC) $(CFLAGS) -o $(SERVER) $(SERVER_OBJ) $(LIBFT)
+		$(CC) $(CFLAGS) -o $(CLIENT) $(CLIENT_OBJ) $(LIBFT)
+		@echo "server and client are ready!"
+	$(LIBFT):
+		$(MAKE) -C $(LIBFT_DIR)
+	%.o : %.c
+		$(CC) &(CFLAGS) -c $< -o $@
 
 	clean:
-	@make clean -s -C $(PRINTF)
+		$(RM) $(SERVER_OBJ) $(CLIENT_OBJ)
 
 	fclean: clean
-	@make fclean -s -C $(PRINTF)
-	@rm -f $(SERVER) $(CLIENT)
+		$(RM) $(CLIENT) $(SERVER)
 	@echo "server and client have bean cleaned successfully"
 
-	re: fclean all
+	re: fclean
+		$(MAKE)

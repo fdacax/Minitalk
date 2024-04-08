@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstdelone_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmeirele <dmeirele@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: fdacax-m <fdacax-m@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/12 15:35:04 by dmeirele          #+#    #+#             */
-/*   Updated: 2023/10/15 12:06:10 by dmeirele         ###   ########.fr       */
+/*   Created: 2023/10/26 20:23:47 by fdacax-m          #+#    #+#             */
+/*   Updated: 2023/10/31 16:09:10 by fdacax-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

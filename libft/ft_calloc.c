@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmeirele <dmeirele@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: fdacax-m <fdacax-m@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/09 17:28:15 by dmeirele          #+#    #+#             */
-/*   Updated: 2023/10/16 18:52:09 by dmeirele         ###   ########.fr       */
+/*   Created: 2023/10/16 20:33:42 by fdacax-m          #+#    #+#             */
+/*   Updated: 2023/11/09 19:04:40 by fdacax-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@ void	*ft_calloc(size_t nmemb, size_t size)
 {
 	unsigned char	*ptr;
 	size_t			i;
-	size_t			total_size;
+	size_t			all;
 
-	total_size = nmemb * size;
-	ptr = malloc(total_size);
-	if (!(ptr))
-		return (NULL);
+	all = nmemb * size;
 	i = 0;
-	while (i < total_size)
+	ptr = malloc(all);
+	if (!ptr)
+		return (NULL);
+	while (i < all)
 	{
 		ptr[i] = 0;
 		i++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmeirele <dmeirele@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: fdacax-m <fdacax-m@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/12 10:50:37 by dmeirele          #+#    #+#             */
-/*   Updated: 2023/10/16 18:51:55 by dmeirele         ###   ########.fr       */
+/*   Created: 2023/10/18 15:57:20 by fdacax-m          #+#    #+#             */
+/*   Updated: 2023/10/31 16:13:41 by fdacax-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,22 @@
 
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	int		i;
-	char	*ptr;
+	char		*str;
+	size_t		len;
+	size_t		i;
 
 	i = 0;
-	ptr = ft_calloc(ft_strlen(s) + 1, sizeof(char));
-	if (!ptr)
+	len = ft_strlen(s);
+	str = ft_calloc(len + 1, sizeof(char));
+	if (!str)
 		return (NULL);
-	while (s[i])
+	if (!s || !f)
+		return (NULL);
+	while (i < len)
 	{
-		ptr[i] = (*f)(i, s[i]);
+		str[i] = f(i, s[i]);
 		i++;
 	}
-	ptr[i] = '\0';
-	return (ptr);
+	str[i] = '\0';
+	return (str);
 }

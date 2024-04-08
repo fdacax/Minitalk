@@ -3,80 +3,82 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmeirele <dmeirele@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: fdacax-m <fdacax-m@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/10 18:10:49 by dmeirele          #+#    #+#             */
-/*   Updated: 2023/10/16 18:52:20 by dmeirele         ###   ########.fr       */
+/*   Created: 2023/10/18 18:09:31 by fdacax-m          #+#    #+#             */
+/*   Updated: 2023/10/31 16:08:40 by fdacax-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_charcmp(char s1, char const *s2)
+static int	ft_charcompare(char const s2, char const *s1)
 {
 	int	i;
 
 	i = 0;
-	while (s2[i])
+	while (s1[i])
 	{
-		if (s1 == s2[i])
-			return (0);
+		if (s1[i] == s2)
+			return (1);
 		i++;
 	}
-	return (1);
+	return (0);
 }
 
-static int	start_loop(char const *s1, char const *s2, int size_s1)
+static int	ft_start(char const *s1, char const *s2)
 {
 	int	i;
 
 	i = 0;
-	while (i < size_s1)
+	while (s1[i])
 	{
-		if (ft_charcmp(s1[i], s2))
-			return (i);
-		i++;
+		if (ft_charcompare(s1[i], s2) == 1)
+			i++;
+		else
+			break ;
 	}
 	return (i);
 }
 
-static int	final_loop(char const *s1, char const *s2, int size_s1)
+static int	ft_final(char const *s1, char const *s2)
 {
 	int	i;
 
-	i = size_s1 - 1;
+	i = ft_strlen(s1) - 1;
 	while (i >= 0)
 	{
-		if (ft_charcmp(s1[i], s2))
-			return (i);
-		i--;
+		if (ft_charcompare(s1[i], s2) == 1)
+			i--;
+		else
+			break ;
 	}
 	return (i);
 }
 
 char	*ft_strtrim(char const *s1, char const *set)
 {
+	char	*str;
 	int		i;
-	int		incpos;
-	int		finpos;
-	int		memmall;
-	char	*ptr;
+	int		truelen;
+	int		truestart;
+	int		truefinal;
 
-	incpos = start_loop(s1, set, ft_strlen(s1));
-	finpos = final_loop(s1, set, ft_strlen(s1));
 	i = 0;
-	memmall = finpos - incpos + 1;
-	if (memmall < 0)
-		memmall = 0;
-	ptr = ft_calloc(memmall + 1, sizeof(char));
-	if (!ptr)
+	truefinal = ft_final(s1, set);
+	truestart = ft_start(s1, set);
+	truelen = (truefinal - truestart + 1);
+	if (truelen < 0)
+		truelen = 0;
+	str = ft_calloc(truelen + 1, sizeof(char));
+	if (!str)
 		return (NULL);
-	while (incpos <= finpos)
+	while (truestart <= truefinal)
 	{
-		ptr[i] = s1[incpos];
+		str[i] = s1[truestart];
 		i++;
-		incpos++;
+		truestart++;
 	}
-	ptr[i] = '\0';
-	return (ptr);
+	str[i] = '\0';
+	return (str);
 }

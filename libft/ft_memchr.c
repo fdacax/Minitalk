@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmeirele <dmeirele@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: fdacax-m <fdacax-m@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/09 13:39:13 by dmeirele          #+#    #+#             */
-/*   Updated: 2023/10/09 19:26:00 by dmeirele         ###   ########.fr       */
+/*   Created: 2023/10/16 16:27:41 by fdacax-m          #+#    #+#             */
+/*   Updated: 2023/11/07 18:27:47 by fdacax-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,14 @@
 
 void	*ft_memchr(const void *s, int c, size_t n)
 {
-	size_t			i;
-	unsigned char	*ptr;
+	const unsigned char	*p;
 
-	ptr = (unsigned char *)s;
-	i = 0;
-	if (n > 0)
+	p = s;
+	while (n-- > 0)
 	{
-		while (i < n)
-		{
-			if (ptr[i] == (unsigned char)c)
-				return (&ptr[i]);
-			i++;
-		}
+		if (*p == (unsigned char)c)
+			return ((void *)p);
+		p++;
 	}
 	return (NULL);
 }

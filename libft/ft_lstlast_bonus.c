@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstlast_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmeirele <dmeirele@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: fdacax-m <fdacax-m@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/12 13:51:11 by dmeirele          #+#    #+#             */
-/*   Updated: 2023/10/12 15:33:24 by dmeirele         ###   ########.fr       */
+/*   Created: 2023/10/26 19:07:26 by fdacax-m          #+#    #+#             */
+/*   Updated: 2023/10/31 16:16:00 by fdacax-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,14 @@
 
 t_list	*ft_lstlast(t_list *lst)
 {
+	t_list	*str;
+
+	if (lst == NULL)
+		return (NULL);
 	while (lst)
 	{
-		if (lst->next == NULL)
-			return (lst);
+		str = lst;
 		lst = lst->next;
 	}
-	return (lst);
+	return (str);
 }

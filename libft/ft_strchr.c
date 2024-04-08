@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmeirele <dmeirele@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: fdacax-m <fdacax-m@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/04 14:20:42 by dmeirele          #+#    #+#             */
-/*   Updated: 2023/10/09 19:26:24 by dmeirele         ###   ########.fr       */
+/*   Created: 2023/10/11 17:56:49 by fdacax-m          #+#    #+#             */
+/*   Updated: 2023/11/07 18:44:22 by fdacax-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 
 char	*ft_strchr(const char *s, int c)
 {
-	if (*s)
+	int		i;
+	char	*str;
+
+	str = (char *)s;
+	i = 0;
+	while (str[i])
 	{
-		while (*s)
-		{
-			if (*s == (const char)c)
-			{
-				return ((char *)s);
-			}
-			s++;
-		}
+		if (str[i] == (const char)c)
+			return (&str[i]);
+		i++;
 	}
 	if ((char)c == 0)
-		return ((char *)s);
+		return (&str[i]);
 	return (NULL);
 }

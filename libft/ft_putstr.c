@@ -1,31 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_str.c                                     :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmeirele <dmeirele@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: fdacax-m <fdacax-m@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/25 18:29:54 by dmeirele          #+#    #+#             */
-/*   Updated: 2023/10/25 18:56:52 by dmeirele         ###   ########.fr       */
+/*   Created: 2023/10/31 18:14:56 by fdacax-m          #+#    #+#             */
+/*   Updated: 2023/11/06 18:46:31 by fdacax-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_print_str(va_list args, int *print)
+void	ft_putstr(char *str, int *i)
 {
-	char	*str;
+	int	j;
 
-	str = va_arg(args, char *);
+	j = 0;
 	if (str == NULL)
 	{
 		write(1, "(null)", 6);
-		*print += 6;
+		*i = *i + 6;
 		return ;
 	}
-	while (*str)
+	while (str[j])
 	{
-		write(1, &*str++, 1);
-		*print += 1;
+		write(1, &str[j], 1);
+		*i = *i + 1;
+		j++;
 	}
 }

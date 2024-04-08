@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmeirele <dmeirele@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: fdacax-m <fdacax-m@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/10 11:38:39 by dmeirele          #+#    #+#             */
-/*   Updated: 2023/10/17 12:03:36 by dmeirele         ###   ########.fr       */
+/*   Created: 2023/10/17 16:37:15 by fdacax-m          #+#    #+#             */
+/*   Updated: 2023/11/09 18:39:23 by fdacax-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,26 @@
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char	*ptr;
-	int		j;
+	char			*sub;
+	size_t			i;
 
-	j = 0;
+	i = 0;
 	if (start >= ft_strlen(s))
 		return (ft_strdup(""));
 	if (len > ft_strlen(s))
 		len = ft_strlen(s);
 	if (start + len >= ft_strlen(s))
 		len = ft_strlen(s) - start;
-	ptr = ft_calloc(len + 1, sizeof(char));
-	if (!ptr)
+	sub = ft_calloc(len + 1, sizeof(char));
+	if (!sub)
 		return (NULL);
-	while (len && s[start])
+	while (s[start] && len)
 	{
-		ptr[j] = s[start];
+		sub[i] = s[start];
 		start++;
-		j++;
+		i++;
 		len--;
 	}
-	ptr[j] = '\0';
-	return (ptr);
+	sub[i] = '\0';
+	return (sub);
 }

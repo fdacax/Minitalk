@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmeirele <dmeirele@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: fdacax-m <fdacax-m@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/08 08:17:56 by dmeirele          #+#    #+#             */
-/*   Updated: 2023/10/09 20:14:55 by dmeirele         ###   ########.fr       */
+/*   Created: 2023/10/09 18:58:56 by fdacax-m          #+#    #+#             */
+/*   Updated: 2023/11/07 18:31:58 by fdacax-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,17 @@
 
 void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	size_t	i;
-	char	*char_src;
-	char	*char_dest;
+	unsigned char	*cdest;
+	unsigned char	*csrc;
+	size_t			i;
 
-	char_src = (char *)src;
-	char_dest = (char *)dest;
+	cdest = (unsigned char *)dest;
+	csrc = (unsigned char *)src;
 	i = 0;
-	if (dest == NULL && src == NULL)
-		return (NULL);
-	while (i < n)
+	while (i < n && (cdest || csrc))
 	{
-		char_dest[i] = char_src[i];
+		cdest[i] = csrc[i];
 		i++;
 	}
-	return (char_dest);
+	return (cdest);
 }

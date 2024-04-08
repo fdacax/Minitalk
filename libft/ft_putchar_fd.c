@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmeirele <dmeirele@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: fdacax-m <fdacax-m@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/10 12:07:00 by dmeirele          #+#    #+#             */
-/*   Updated: 2023/10/10 12:41:48 by dmeirele         ###   ########.fr       */
+/*   Created: 2023/10/18 17:15:52 by fdacax-m          #+#    #+#             */
+/*   Updated: 2023/10/31 16:15:34 by fdacax-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

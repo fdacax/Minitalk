@@ -3,82 +3,77 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmeirele <dmeirele@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: fdacax-m <fdacax-m@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/11 15:29:55 by dmeirele          #+#    #+#             */
-/*   Updated: 2023/10/16 18:51:42 by dmeirele         ###   ########.fr       */
+/*   Created: 2023/10/17 17:58:19 by fdacax-m          #+#    #+#             */
+/*   Updated: 2023/11/07 18:31:26 by fdacax-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	digit_count(int n)
+char	*ft_nitoa(unsigned int a, int len)
 {
-	int				len;
-	unsigned int	nb;
+	char	*nn;
 
-	len = 0;
-	nb = n;
-	if (n < 0)
+	nn = ft_calloc(len + 1, sizeof(char));
+	if (!nn)
+		return (NULL);
+	nn[len] = '\0';
+	while (len > 0)
 	{
-		len++;
-		nb = -n;
+		len--;
+		nn[len] = a % 10 + '0';
+		a = a / 10;
 	}
-	if (nb == 0)
-	{
-		len = 1;
-		return (len);
-	}
-	while (nb > 0)
-	{
-		nb = nb / 10;
-		len++;
-	}
-	return (len);
+	nn[0] = '-';
+	return (nn);
 }
 
-static char	*negative_number(unsigned int n, int d_count)
+int	ft_countnum(int a)
 {
-	char	*negnbr;
+	int				i;
+	unsigned int	j;
 
-	negnbr = ft_calloc(d_count + 1, sizeof(char));
-	if (!negnbr)
-		return (NULL);
-	negnbr[d_count] = '\0';
-	while (d_count > 0)
+	j = a;
+	i = 0;
+	if (a < 0)
 	{
-		d_count--;
-		negnbr[d_count] = n % 10 + '0';
-		n = n / 10;
+		i++;
+		j = -a;
 	}
-	negnbr[0] = '-';
-	return (negnbr);
+	if (a == 0)
+		return (1);
+	while (j > 0)
+	{
+		j /= 10;
+		i++;
+	}
+	return (i);
 }
 
 char	*ft_itoa(int n)
 {
-	char			*nbr;
-	char			*negnbr;
-	int				d_count;
-	unsigned int	nb;
+	char			*o;
+	int				nlen;
+	unsigned int	nbr;
 
-	nb = n;
+	nbr = n;
+	nlen = ft_countnum(n);
 	if (n < 0)
 	{
-		nb = -n;
-		d_count = digit_count(n);
-		negnbr = negative_number(nb, d_count);
-		return (negnbr);
+		nbr = -n;
+		o = ft_nitoa(nbr, nlen);
+		return (o);
 	}
-	d_count = digit_count(n);
-	nbr = ft_calloc(d_count + 1, sizeof(char));
-	if (!nbr)
+	o = ft_calloc(nlen + 1, sizeof(char));
+	if (!o)
 		return (NULL);
-	nbr[d_count] = '\0';
-	while (d_count > 0)
+	o[nlen] = '\0';
+	while (nlen > 0)
 	{
-		nbr[d_count-- - 1] = n % 10 + '0';
+		o[nlen-- - 1] = n % 10 + '0';
 		n = n / 10;
 	}
-	return (nbr);
+	return (o);
 }

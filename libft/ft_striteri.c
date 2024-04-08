@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmeirele <dmeirele@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: fdacax-m <fdacax-m@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/12 10:49:12 by dmeirele          #+#    #+#             */
-/*   Updated: 2023/10/17 12:03:15 by dmeirele         ###   ########.fr       */
+/*   Created: 2023/10/18 16:34:55 by fdacax-m          #+#    #+#             */
+/*   Updated: 2023/11/07 18:45:57 by fdacax-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 
 void	ft_striteri(char *s, void (*f)(unsigned int, char *))
 {
-	int	i;
+	unsigned int	i;
 
 	i = 0;
-	while (s[i])
+	if (!s || !(*s) || !f)
+		return ;
+	while ((s[i]))
 	{
-		(*f)(i, (char *)&s[i]);
+		f(i, &s[i]);
 		i++;
 	}
 }

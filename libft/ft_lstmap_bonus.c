@@ -3,55 +3,54 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmeirele <dmeirele@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: fdacax-m <fdacax-m@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/15 11:31:49 by dmeirele          #+#    #+#             */
-/*   Updated: 2023/10/16 12:36:37 by dmeirele         ###   ########.fr       */
+/*   Created: 2023/10/26 22:01:38 by fdacax-m          #+#    #+#             */
+/*   Updated: 2023/10/31 16:12:48 by fdacax-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static t_list	*first_node(t_list *lst, void *(*f)(void *),
-		void (*del)(void *))
+t_list	*ft_firstlist(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	t_list	*ptrlst;
-	void	*cont;
+	t_list	*ptr;
+	void	*c;
 
-	cont = f(lst->content);
-	ptrlst = ft_lstnew(cont);
-	if (!ptrlst)
+	c = f(lst->content);
+	ptr = ft_lstnew(c);
+	if (!ptr)
 	{
-		del(cont);
+		del(c);
 		return (NULL);
 	}
-	return (ptrlst);
+	return (ptr);
 }
 
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	t_list	*head;
-	t_list	*ptrlst;
-	void	*cont;
+	t_list	*ptr;
+	t_list	*start;
+	void	*c;
 
 	if (!lst)
 		return (NULL);
-	ptrlst = first_node(lst, f, del);
-	if (ptrlst == NULL)
+	ptr = ft_firstlist(lst, f, del);
+	if (ptr == NULL)
 		return (NULL);
-	head = ptrlst;
+	start = ptr;
 	while (lst->next)
 	{
 		lst = lst->next;
-		cont = f(lst->content);
-		ptrlst->next = ft_lstnew(cont);
-		if (!ptrlst->next)
+		c = f(lst->content);
+		ptr->next = ft_lstnew(c);
+		if (!ptr->next)
 		{
-			del(cont);
-			ft_lstclear(&head, del);
+			del(c);
+			ft_lstclear(&start, del);
 			return (NULL);
 		}
-		ptrlst = ptrlst->next;
+		ptr = ptr->next;
 	}
-	return (head);
+	return (start);
 }

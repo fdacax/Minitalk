@@ -3,22 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmeirele <dmeirele@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: fdacax-m <fdacax-m@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/17 14:51:32 by dmeirele          #+#    #+#             */
-/*   Updated: 2023/10/25 18:59:45 by dmeirele         ###   ########.fr       */
+/*   Created: 2023/10/31 16:31:39 by fdacax-m          #+#    #+#             */
+/*   Updated: 2023/11/06 18:41:00 by fdacax-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_put_char(char c, int *print)
-{
-	write(1, &c, 1);
-	*print += 1;
-}
-
-static void	ft_check_flags(const char *format, va_list args, int *print)
+static void	ft_conditions(const char *format, va_list arg, int *i)
 {
 	while (*format)
 	{
@@ -26,33 +20,30 @@ static void	ft_check_flags(const char *format, va_list args, int *print)
 		{
 			format++;
 			if (*format == 'c')
-				ft_print_char(args, print);
+				ft_putchar(va_arg(arg, int), i);
 			if (*format == 's')
-				ft_print_str(args, print);
-			if (*format == 'd' || *format == 'i' || *format == 'u')
-				ft_print_nbr(args, print, *format);
+				ft_putstr(va_arg(arg, char *), i);
+			if (*format == 'i' || *format == 'd' || *format == 'u')
+				ft_choose(*format, va_arg(arg, int), i);
 			if (*format == 'x' || *format == 'X' || *format == 'p')
-				ft_print_hex(args, print, *format);
+				ft_check_format(*format, arg, i);
 			if (*format == '%')
-			{
-				write(1, "%", 1);
-				*print += 1;
-			}
+				ft_putchar('%', i);
 		}
 		else
-			ft_put_char(*format, print);
+			ft_putchar(*format, i);
 		format++;
 	}
 }
 
 int	ft_printf(const char *format, ...)
 {
-	int		print;
-	va_list	args;
+	va_list	arg;
+	int		i;
 
-	print = 0;
-	va_start(args, format);
-	ft_check_flags(format, args, &print);
-	va_end(args);
-	return (print);
+	i = 0;
+	va_start(arg, format);
+	ft_conditions(format, arg, &i);
+	va_end(arg);
+	return (i);
 }

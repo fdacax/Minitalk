@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstiter_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmeirele <dmeirele@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: fdacax-m <fdacax-m@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/15 11:26:43 by dmeirele          #+#    #+#             */
-/*   Updated: 2023/10/15 12:05:03 by dmeirele         ###   ########.fr       */
+/*   Created: 2023/10/26 20:51:20 by fdacax-m          #+#    #+#             */
+/*   Updated: 2023/10/31 16:11:39 by fdacax-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

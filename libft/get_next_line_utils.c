@@ -3,54 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmeirele <dmeirele@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: fdacax-m <fdacax-m@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/26 16:37:43 by dmeirele          #+#    #+#             */
-/*   Updated: 2023/10/30 19:07:33 by dmeirele         ###   ########.fr       */
+/*   Created: 2023/11/21 18:10:23 by fdacax-m          #+#    #+#             */
+/*   Updated: 2023/12/19 13:23:18 by fdacax-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_calloc(size_t nmemb, size_t size)
-{
-	unsigned char	*ptr;
-	size_t			i;
-	size_t			total_size;
-
-	total_size = nmemb * size;
-	ptr = malloc(total_size);
-	if (!ptr)
-		return (NULL);
-	i = 0;
-	while (i < total_size)
-	{
-		ptr[i] = 0;
-		i++;
-	}
-	return (ptr);
-}
-
-char	*ft_strcpy_nl(char *src, char *dest, int nl_stop)
-{
-	int	i;
-
-	i = 0;
-	while (src[i])
-	{
-		dest[i] = src[i];
-		if (nl_stop && src[i] == '\n')
-		{
-			i++;
-			break ;
-		}
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
-}
-
-int	ft_check_character(char *str, int c)
+int	ft_charcmp(char *str, int c)
 {
 	int	i;
 
@@ -66,36 +28,64 @@ int	ft_check_character(char *str, int c)
 	return (0);
 }
 
-size_t	ft_strlen(const char *str)
+char	*ft_strcpy(char *src, char *dest, int flag)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
-	while (str && str[i])
+	while (src[i])
+	{
+		dest[i] = src[i];
+		if (flag && src[i] == '\n')
+		{
+			i++;
+			break ;
+		}
 		i++;
-	return (i);
+	}
+	dest[i] = '\0';
+	return (dest);
+}
+
+void	*ft_calloc(size_t nmemb, size_t size)
+{
+	unsigned char	*ptr;
+	size_t			i;
+	size_t			len;
+
+	len = nmemb * size;
+	ptr = malloc(len);
+	if (!ptr)
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		ptr[i] = 0;
+		i++;
+	}
+	return (ptr);
 }
 
 char	*ft_strjoin_gnl(char *str1, char *str2)
 {
 	size_t	len;
+	char	*ptr;
 	int		i;
-	int		k;
-	char	*joined;
+	int		j;
 
-	i = 0;
 	len = ft_strlen(str1) + ft_strlen(str2);
-	joined = ft_calloc((len + 1), sizeof(char));
-	if (!joined)
+	ptr = ft_calloc((len + 1), sizeof(char));
+	if (!ptr)
 		return (NULL);
+	i = 0;
 	while (str1 && str1[i])
 	{
-		joined[i] = str1[i];
+		ptr[i] = str1[i];
 		i++;
 	}
-	k = 0;
-	while (str2 && str2[k])
-		joined[i++] = str2[k++];
+	j = 0;
+	while (str2 && str2[j])
+		ptr[i++] = str2[j++];
 	free(str1);
-	return (joined);
+	return (ptr);
 }

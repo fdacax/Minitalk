@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmeirele <dmeirele@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: fdacax-m <fdacax-m@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/10 17:17:03 by dmeirele          #+#    #+#             */
-/*   Updated: 2023/11/30 19:15:45 by dmeirele         ###   ########.fr       */
+/*   Created: 2023/10/17 17:27:34 by fdacax-m          #+#    #+#             */
+/*   Updated: 2023/10/31 16:17:31 by fdacax-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,29 @@
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char	*ptr;
-	size_t	s1_size;
-	size_t	s2_size;
+	char	*j;
 	size_t	i;
+	size_t	len1;
+	size_t	len2;
 
+	len1 = ft_strlen(s1);
+	len2 = ft_strlen(s2);
+	j = ft_calloc(len1 + len2 + 1, sizeof(char));
 	i = 0;
-	s1_size = ft_strlen(s1);
-	s2_size = ft_strlen(s2);
-	ptr = ft_calloc(s1_size + s2_size + 1, sizeof(char));
-	if (!ptr)
+	if (!j)
 		return (NULL);
-	while (i < s1_size)
+	while (s1[i])
 	{
-		ptr[i] = s1[i];
+		j[i] = s1[i];
 		i++;
 	}
 	i = 0;
-	while (i < s2_size)
+	while (s2[i])
 	{
-		ptr[s1_size] = s2[i];
-		s1_size++;
+		j[len1] = s2[i];
+		len1++;
 		i++;
 	}
-	ptr[s1_size] = '\0';
-	return (ptr);
+	j[len1] = '\0';
+	return (j);
 }

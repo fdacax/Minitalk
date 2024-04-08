@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstadd_back_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmeirele <dmeirele@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: fdacax-m <fdacax-m@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/12 14:41:08 by dmeirele          #+#    #+#             */
-/*   Updated: 2023/10/15 12:05:20 by dmeirele         ###   ########.fr       */
+/*   Created: 2023/10/26 19:46:33 by fdacax-m          #+#    #+#             */
+/*   Updated: 2023/10/31 16:11:18 by fdacax-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	t_list	*node_helper;
+	t_list	*ptr;
 
-	node_helper = *lst;
-	if (node_helper == NULL)
+	ptr = *lst;
+	if (*lst == NULL)
 	{
 		*lst = new;
 		return ;
 	}
-	while (node_helper->next)
-		node_helper = node_helper->next;
-	node_helper->next = new;
+	while (ptr->next)
+		ptr = ptr->next;
+	ptr->next = new;
 }

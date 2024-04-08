@@ -3,98 +3,98 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmeirele <dmeirele@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: fdacax-m <fdacax-m@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/26 16:37:25 by dmeirele          #+#    #+#             */
-/*   Updated: 2023/11/30 19:16:14 by dmeirele         ###   ########.fr       */
+/*   Created: 2023/11/06 19:04:02 by fdacax-m          #+#    #+#             */
+/*   Updated: 2023/12/19 13:23:53 by fdacax-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_read_from_file(char *s_buffer, int fd)
+char	*ft_get_file(char *ptr, int fd)
 {
-	char	*temp_buffer;
+	char	*str_temp;
 	int		bytes_read;
 
-	temp_buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
-	if (!temp_buffer)
+	str_temp = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	if (!str_temp)
 		return (NULL);
 	bytes_read = 1;
-	while (!ft_check_character(s_buffer, '\n') && bytes_read > 0)
+	while (!ft_charcmp(ptr, '\n') && bytes_read > 0)
 	{
-		bytes_read = read(fd, temp_buffer, BUFFER_SIZE);
+		bytes_read = read(fd, str_temp, BUFFER_SIZE);
 		if (bytes_read < 0)
 		{
-			if (s_buffer)
-				free(s_buffer);
-			free(temp_buffer);
+			if (ptr)
+				free(ptr);
+			free(str_temp);
 			return (NULL);
 		}
-		temp_buffer[bytes_read] = '\0';
-		s_buffer = ft_strjoin_gnl(s_buffer, temp_buffer);
+		str_temp[bytes_read] = '\0';
+		ptr = ft_strjoin_gnl(ptr, str_temp);
 	}
-	free(temp_buffer);
-	return (s_buffer);
+	free(str_temp);
+	return (ptr);
 }
 
-char	*ft_extract_line(char *s_buffer)
+char	*ft_extracted_line(char *ptr)
 {
 	int		i;
-	int		k;
-	char	*line;
+	int		j;
+	char	*str;
 
-	if (s_buffer[0] == '\0')
+	if (ptr[0] == '\0')
 		return (NULL);
 	i = 0;
-	while (s_buffer[i] != '\n' && s_buffer[i])
+	while (ptr[i] != '\n' && ptr[i])
 		i++;
-	k = i;
-	if (s_buffer[i] == '\n')
-		k++;
-	line = ft_calloc(k + 1, sizeof(char));
-	if (!line)
+	j = i;
+	if (ptr[i] == '\n')
+		j++;
+	str = ft_calloc(j + 1, sizeof(char));
+	if (!str)
 		return (NULL);
-	ft_strcpy_nl(s_buffer, line, 1);
-	return (line);
+	ft_strcpy(ptr, str, 1);
+	return (str);
 }
 
-char	*ft_update_data(char *s_buffer)
+char	*ft_remaining(char *ptr)
 {
-	char	*new_data;
-	int		start;
+	char	*r_str;
+	int		i;
 
-	start = 0;
-	while (s_buffer[start] && s_buffer[start] != '\n')
-		start++;
-	if (s_buffer[start] == '\0')
+	i = 0;
+	while (ptr[i] && ptr[i] != '\n')
+		i++;
+	if (ptr[i] == '\0')
 	{
-		free(s_buffer);
+		free(ptr);
 		return (NULL);
 	}
-	start++;
-	new_data = ft_calloc(ft_strlen(s_buffer + start) + 1, sizeof(char));
-	if (!new_data)
+	i++;
+	r_str = ft_calloc(ft_strlen(ptr + i) + 1, sizeof(char));
+	if (!r_str)
 		return (NULL);
-	ft_strcpy_nl(s_buffer + start, new_data, 0);
-	free(s_buffer);
-	return (new_data);
+	ft_strcpy(ptr + i, r_str, 0);
+	free(ptr);
+	return (r_str);
 }
 
 char	*get_next_line(int fd)
 {
 	char		*line;
-	static char	*s_buffer;
+	static char	*ptr;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	s_buffer = ft_read_from_file(s_buffer, fd);
-	if (!s_buffer)
+	ptr = ft_get_file(ptr, fd);
+	if (!ptr)
 	{
-		free(s_buffer);
+		free(ptr);
 		return (NULL);
 	}
-	line = ft_extract_line(s_buffer);
-	s_buffer = ft_update_data(s_buffer);
+	line = ft_extracted_line(ptr);
+	ptr = ft_remaining(ptr);
 	return (line);
 }

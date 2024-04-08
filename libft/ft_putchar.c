@@ -1,22 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_char.c                                    :+:      :+:    :+:   */
+/*   ft_putchar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmeirele <dmeirele@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: fdacax-m <fdacax-m@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/25 18:29:09 by dmeirele          #+#    #+#             */
-/*   Updated: 2023/10/25 18:39:36 by dmeirele         ###   ########.fr       */
+/*   Created: 2023/10/31 18:34:38 by fdacax-m          #+#    #+#             */
+/*   Updated: 2023/11/06 16:23:39 by fdacax-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_print_char(va_list args, int *print)
+void	ft_putchar(char c, int *i)
 {
-	char	c;
-
-	c = va_arg(args, int);
 	write(1, &c, 1);
-	*print += 1;
+	*i = *i + 1;
 }

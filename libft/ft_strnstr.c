@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmeirele <dmeirele@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: fdacax-m <fdacax-m@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/09 14:46:34 by dmeirele          #+#    #+#             */
-/*   Updated: 2023/10/09 16:09:50 by dmeirele         ###   ########.fr       */
+/*   Created: 2023/10/16 18:06:15 by fdacax-m          #+#    #+#             */
+/*   Updated: 2023/10/16 18:52:31 by fdacax-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,24 @@
 
 char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
-	size_t	big_size;
-	size_t	little_size;
-	size_t	i;
+	unsigned char	*str1;
+	unsigned char	*str2;
+	size_t			i;
+	size_t			j;
 
+	str1 = (unsigned char *)big;
+	str2 = (unsigned char *)little;
 	i = 0;
-	big_size = ft_strlen(big);
-	little_size = ft_strlen(little);
-	if (little[0] == '\0')
-		return ((char *)&big[i]);
-	if (little_size > big_size || len == 0)
-		return (NULL);
-	while (big[i] && i < len)
+	j = 0;
+	if (str2[0] == '\0')
+		return ((char *)str1);
+	while (str1[i] && i < len)
 	{
-		if (ft_strncmp(&big[i], little, little_size) == 0 && i
-			+ little_size <= len)
-			return ((char *)&big[i]);
+		while ((str1[i + j] == str2[j]) && str2[j] && i + j < len)
+			j++;
+		if (str2[j] == '\0')
+			return ((char *)str1 + i);
+		j = 0;
 		i++;
 	}
 	return (NULL);

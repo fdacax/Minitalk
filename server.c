@@ -1,27 +1,30 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   server.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fdacax-m <fdacax-m@student.42porto.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/19 17:31:26 by fdacax-m          #+#    #+#             */
+/*   Updated: 2024/03/19 17:31:26 by fdacax-m         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minitalk.h"
 
-char	*str = NULL;
+int	bb;
 
 static void	ft_sig_handler(int signal)
 {
-	static int	bit_index = 0;
-	static unsigned char byte = 0;
-
 	if (signal == SIGUSR2)
-		byte |= (1 << (7 - bit_index)); // Defina o bit apropriado como 1
+	{
+		bb = bb << 1;
+		bb = bb + 1;
+	}
 	else if (signal == SIGUSR1)
-		byte &= ~(1 << (7 - bit_index)); // Defina o bit apropriado como 0
+		bb = bb << 1;
 	else
 		exit(0);
-	bit_index++;
-	if (bit_index == 8) // Se todos os bits foram lidos
-	{
-		if (!str)
-			str = ft_strdup(""); // Inicialize a string se for a primeira vez
-		str = ft_strjoin_free(str, ft_chr_to_str(byte)); // Adicione o byte à string
-		byte = 0; // Reinicie o byte
-		bit_index = 0; // Reinicie o índice do bit
-	}
 }
 
 static int	ft_len(void)
@@ -35,14 +38,44 @@ static int	ft_len(void)
 		usleep(205);
 		i--;
 	}
-	len = ft_strlen(str); // Obtenha o comprimento da string global
+	len = bb;
+	bb = 0;
 	return (len);
+}
+
+static char	*ft_allocate(int len)
+{
+	unsigned char	byte;
+	char			*str;
+	int				i;
+	int				j;
+
+	str = calloc(len + 1, sizeof(char));
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		byte = 0;
+		j = 0;
+		while (j < 8)
+		{
+			pause();
+			byte |= bb << (7 - j);
+			j++;
+		}
+		str[i] = byte;
+		i++;
+	}
+	str[i] = '\0';
+	return (str);
 }
 
 int	main(void)
 {
 	pid_t	pid;
 	int		len;
+	char	*str;
 
 	pid = getpid();
 	ft_printf("PID: %d\n", pid);
@@ -51,7 +84,10 @@ int	main(void)
 	while (1)
 	{
 		pause();
+		bb = 0;
 		len = ft_len();
-		write(1, str, len); // Escreva a string global
+		str = ft_allocate(len);
+		write (1, str, len);
+		free (str);
 	}
 }

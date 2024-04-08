@@ -1,19 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
+/*   minitalkbonus.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fdacax-m <fdacax-m@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/18 17:34:01 by fdacax-m          #+#    #+#             */
-/*   Updated: 2023/10/18 17:44:14 by fdacax-m         ###   ########.fr       */
+/*   Created: 2024/04/04 20:04:57 by fdacax-m          #+#    #+#             */
+/*   Updated: 2024/04/04 20:04:57 by fdacax-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef MINITALKBONUS_H
+#define MINITALKBONUS_H
 
-void	ft_putendl_fd(char *s, int fd)
-{
-	ft_putstr_fd(s, fd);
-	ft_putchar_fd('\n', fd);
-}
+#include "libft/libft.h"
+# include <signal.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <sys/types.h>
+
+static char	*ft_allocate(int len);
+static int	ft_len(void);
+static char	*ft_allocate(int len);
+void	send_message(int signal, siginfo_t *info, void *context);
+
+#endif

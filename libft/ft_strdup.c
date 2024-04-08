@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmeirele <dmeirele@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: fdacax-m <fdacax-m@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/09 18:23:29 by dmeirele          #+#    #+#             */
-/*   Updated: 2023/10/16 14:30:50 by dmeirele         ###   ########.fr       */
+/*   Created: 2023/10/17 16:21:27 by fdacax-m          #+#    #+#             */
+/*   Updated: 2023/11/09 18:41:54 by fdacax-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 
 char	*ft_strdup(const char *s)
 {
-	char	*ptr;
-	size_t	str_size;
+	char	*c;
+	size_t	t;
 	size_t	i;
 
 	i = 0;
-	str_size = ft_strlen(s);
-	ptr = ft_calloc(str_size + 1, 1);
-	if (!ptr)
+	t = ft_strlen(s);
+	c = ft_calloc(t + 1, 1);
+	if (!c)
 		return (NULL);
-	while (i <= str_size)
+	while (i <= t)
 	{
-		ptr[i] = s[i];
+		c[i] = s[i];
 		i++;
 	}
-	return (ptr);
+	return (c);
 }

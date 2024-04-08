@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstclear_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmeirele <dmeirele@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: fdacax-m <fdacax-m@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/15 12:04:37 by dmeirele          #+#    #+#             */
-/*   Updated: 2023/10/15 12:04:39 by dmeirele         ###   ########.fr       */
+/*   Created: 2023/10/26 20:34:49 by fdacax-m          #+#    #+#             */
+/*   Updated: 2023/10/31 16:16:20 by fdacax-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,14 @@
 
 void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	t_list	*node_helper;
-	t_list	*node_free;
+	t_list	*ptr;
 
-	node_helper = *lst;
-	while (node_helper)
+	ptr = *lst;
+	while (ptr)
 	{
-		del(node_helper->content);
-		node_free = node_helper;
-		node_helper = node_helper->next;
-		free(node_free);
+		ptr = ptr->next;
+		ft_lstdelone(*lst, del);
+		*lst = ptr;
 	}
-	*lst = NULL;
+	lst = NULL;
 }

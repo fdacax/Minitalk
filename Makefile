@@ -1,6 +1,7 @@
+MAKEFLAGS += -s
 NAME = server client
 NAME_BONUS = server_bonus client_bonus
-CC = cc
+CC = cc -g
 CFLAGS = -Wall -Wextra -Werror
 RM = rm -rf
 LIBFT = libft/libft.a
@@ -38,7 +39,7 @@ bonus: $(NAME_BONUS)
 $(NAME_BONUS): $(LIBFT) $(SERVER_OBJS_BONUS) $(CLIENT_OBJS_BONUS)
 	$(CC) $(FLAGS) -o $(SERVER_BONUS) $(SERVER_OBJS_BONUS) $(LIBFT)
 	$(CC) $(FLAGS) -o $(CLIENT_BONUS) $(CLIENT_OBJS_BONUS) $(LIBFT)
-	@echo "Compilation Bonus successful."
+	@echo "server and client bonus are ready!"
 
 %.o : %.c
 	$(CC) $(FLAGS) -c $< -o $@

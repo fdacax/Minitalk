@@ -5,98 +5,111 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fdacax-m <fdacax-m@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/04 19:42:57 by fdacax-m          #+#    #+#             */
-/*   Updated: 2024/04/08 20:06:10 by fdacax-m         ###   ########.fr       */
+/*   Created: 2024/06/13 14:53:31 by fdacax-m          #+#    #+#             */
+/*   Updated: 2024/06/13 14:53:31 by fdacax-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalkbonus.h"
-int	bb;
+#include "minitalk_bonus.h"
 
-static void	ft_sig_handler(int signal)
+unsigned char	*str_join_c(unsigned char *msg, unsigned char c)
 {
-	if (signal == SIGUSR2)
+	unsigned char	*str;
+	size_t			i;
+
+	if (!msg)
 	{
-		bb = bb << 1;
-		bb = bb + 1;
+		str = ft_calloc(2, sizeof(unsigned char));
+		if (!str)
+			return (NULL);
+		str[0] = c;
+		return (str);
 	}
-	else
-		bb = bb << 1;
-}
-
-static int	ft_len(void)
-{
-	int	i;
-
-	bb = 0;
-	i = -1;
-	while (++i < 32)
-		usleep(30000);
-	return (bb);
-}
-
-static char	*ft_allocate(int len)
-{
-	char	*str;
-	int		i;
-	int		j;
-
-	str = (char *)malloc(sizeof(char) * len + 1);
+	i = ft_strlen((char *)msg);
+	str = ft_calloc(i + 2, sizeof(char));
 	if (!str)
 		return (NULL);
-	i = -1;
-	while (++i < len)
-	{
-		j = -1;
-		while (++j < 8)
-		{
-			if (!usleep(100000))
-			{
-				free(str);
-				return (NULL);
-			}
-		}
-		str[i] = bb;
-	}
-	str[i] = '\0';
+	ft_memcpy (str, msg, i);
+	str[i] = c;
+	free(msg);
 	return (str);
 }
 
-void	send_message(char *str, siginfo_t *info, void *context)
+void	making_str( int *byte, siginfo_t *info)
 {
-	(void)context;
-	while ()
+	static unsigned char	*msg = NULL;
+	unsigned char			c;
+	int						i;
+
+	i = 0;
+	c = 0;
+	while (i < 8)
+	{
+		c |= (byte[i] << i);
+		i++;
+	}
+	if (c == '\0')
+	{
+		ft_printf("%s", msg);
+		free(msg);
+		msg = NULL;
 		kill(info->si_pid, SIGUSR1);
+	}
+	else
+		msg = str_join_c(msg, c);
 }
 
-int main()
+void	signal_handler(int signal, siginfo_t *info, void *context)
 {
-	struct sigaction	sa;
-	struct sigaction	send;
-	pid_t 				pid;
-	char				*str;
-	int 				len;
+	static int	byte[8];
+	static int	bit = 0;
 
+	(void)context;
+	if (signal == SIGUSR2)
+		byte[bit] = 1;
+	else if (signal == SIGUSR1)
+		byte[bit] = 0;
+	else
+	{
+		ft_printf("Received SIGINT. Exiting...\n");
+		exit(0);
+	}
+	bit++;
+	if (bit == 8)
+	{
+		making_str(byte, info);
+		bit = 0;
+	}
+}
 
-	sa.sa_sigaction = &ft_sig_handler;
-	send.sa_sigaction = &send_message;
-	sigemptyset(&sa.sa_mask);
-	sigemptyset(&send.sa_mask);
-	send.sa_flags = SA_SIGINFO;
+void	error_handler(int flag)
+{
+	if (flag == 1)
+	{
+		perror("Failed to set up signal handler");
+		exit(EXIT_FAILURE);
+	}
+}
+
+int	main(void)
+{
+	struct sigaction	act;
+	pid_t				pid;
+
+	act.sa_sigaction = &signal_handler;
+	sigemptyset(&act.sa_mask);
+	act.sa_flags = SA_SIGINFO;
 	pid = getpid();
-	ft_printf("PID:%d\n", pid);
-	if (sigaction(SIGUSR1, &sa, NULL) == -1)
-		ft_printf("failed handler\n");
-	if (sigaction(SIGUSR2, &sa, NULL) == -1)
-		ft_printf("failed handler\n");
+	ft_printf("The process ID is: %i\n", pid);
+	if (sigaction(SIGUSR1, &act, NULL) == -1)
+		error_handler(1);
+	if (sigaction(SIGUSR2, &act, NULL) == -1)
+		error_handler(1);
+	if (sigaction(SIGINT, &act, NULL) == -1)
+		error_handler(1);
 	while (1)
 	{
+		usleep(10);
 		pause();
-		bb = 0;
-		len = ft_len();
-		str = ft_allocate(len);
-		write(1, str, len);
-		free(str);
-
 	}
 }

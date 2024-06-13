@@ -5,76 +5,63 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fdacax-m <fdacax-m@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/04 19:42:29 by fdacax-m          #+#    #+#             */
-/*   Updated: 2024/04/08 20:06:23 by fdacax-m         ###   ########.fr       */
+/*   Created: 2024/06/13 14:53:48 by fdacax-m          #+#    #+#             */
+/*   Updated: 2024/06/13 14:53:48 by fdacax-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalkbonus.h"
+#include "minitalk_bonus.h"
 
-void	send_bit(pid_t server_pid, int bit)
+void	send_bit(pid_t server_pid, int letter)
 {
-	if (bit == 0)
-		kill(server_pid, SIGUSR1);
-	else
-		kill(server_pid, SIGUSR2);
+	int	bits;
+
+	bits = 0;
+	while (bits < 8)
+	{
+		if (letter & 1)
+			kill(server_pid, SIGUSR2);
+		else
+			kill(server_pid, SIGUSR1);
+		letter >>= 1;
+		bits++;
+		usleep(150);
+	}
 }
 
-void	sig_handler_server(int signum, siginfo_t *info, void *context)
+void	extract_byte(pid_t server_pid, char *message)
+{
+	int	i;
+
+	i = 0;
+	while (message[i])
+		send_bit(server_pid, message[i++]);
+	send_bit(server_pid, '\0');
+}
+
+void	client_signal_handler(int signal, siginfo_t *info, void *context)
 {
 	(void)info;
 	(void)context;
-
-	if(signum == SIGUSR1)
-		ft_printf("SIGNAL RECEIVED\n");
+	if (signal == SIGUSR1)
+		ft_printf("Message completely sent\n");
 	exit(EXIT_SUCCESS);
 }
 
-void	send_len(pid_t server_pid, unsigned int len)
+int	main(int argc, char *argv[])
 {
-	int	i;
+	struct sigaction	act;
+	char				*message;
+	pid_t				server_pid;
 
-	i = 31;
-	while (i >= 0)
-	{
-		send_bit(server_pid, (len >> i) & 1);
-		usleep(150);
-		i--;
-	}
-}
-
-static void	send_string(pid_t server_pid, const char *str)
-{
-	int	i;
-
-	while (*str)
-	{
-		i = 7;
-		while (i >= 0)
-		{
-			send_bit(server_pid, (*str >> i) & 1);
-			usleep(150);
-			i--;
-		}
-		str++;
-	}
-}
-
-int main(int argc, char **argv)
-{
-	pid_t 				server_pid;
-	struct sigaction	sa;
-	const char 			*message;
-
-	if(argc != 3)
-		return (0);
-	sa.sa_sigaction = &sig_handler_server;
-	sigemptyset(&sa.sa_mask);
-	if(sigaction(SIGUSR1, &sa, NULL))
-		ft_printf("Erro to send signal back");
+	act.sa_sigaction = &client_signal_handler;
+	sigemptyset(&act.sa_mask);
+	if (sigaction(SIGUSR1, &act, NULL) == -1)
+		ft_printf("Erro to send signal back to client.");
+	if (argc != 3)
+		return (1);
 	server_pid = ft_atoi(argv[1]);
 	message = argv[2];
-	send_len(server_pid, ft_strlen(message));
-	send_string(server_pid, message);
+	extract_byte(server_pid, message);
 	return (0);
 }

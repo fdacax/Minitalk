@@ -12,6 +12,8 @@
 
 #include "minitalk.h"
 
+unsigned char	*msg = NULL;
+
 unsigned char	*str_join_c(unsigned char *msg, unsigned char c)
 {
 	unsigned char	*str;
@@ -37,7 +39,6 @@ unsigned char	*str_join_c(unsigned char *msg, unsigned char c)
 
 void	making_str( int *byte)
 {
-	static unsigned char	*msg = NULL;
 	unsigned char			c;
 	int						i;
 
@@ -71,6 +72,11 @@ void	signal_handler(int signal, siginfo_t *info, void *context)
 		byte[bit] = 0;
 	else
 	{
+		if (msg)
+		{
+			free(msg);
+			msg = NULL;
+		}
 		ft_printf("Received SIGINT. Exiting...\n");
 		exit(0);
 	}

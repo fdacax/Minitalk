@@ -12,7 +12,7 @@
 
 #include "minitalk_bonus.h"
 
-unsigned char	*msg = NULL;
+unsigned char	*g_msg = NULL;
 
 unsigned char	*str_join_c(unsigned char *msg, unsigned char c)
 {
@@ -51,13 +51,13 @@ void	making_str( int *byte, siginfo_t *info)
 	}
 	if (c == '\0')
 	{
-		ft_printf("%s", msg);
-		free(msg);
-		msg = NULL;
+		ft_printf("%s", g_msg);
+		free(g_msg);
+		g_msg = NULL;
 		kill(info->si_pid, SIGUSR1);
 	}
 	else
-		msg = str_join_c(msg, c);
+		g_msg = str_join_c(g_msg, c);
 }
 
 void	signal_handler(int signal, siginfo_t *info, void *context)
@@ -72,12 +72,12 @@ void	signal_handler(int signal, siginfo_t *info, void *context)
 		byte[bit] = 0;
 	else
 	{
-		if (msg)
+		if (g_msg)
 		{
-			free(msg);
-			msg = NULL;
+			free(g_msg);
+			g_msg = NULL;
 		}
-		ft_printf("Received SIGINT. Exiting...\n");
+		ft_printf("\nReceived SIGINT. Exiting...\n");
 		exit(0);
 	}
 	bit++;
